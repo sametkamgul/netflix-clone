@@ -5,60 +5,24 @@
     <Button text="Don't click me!!!" /> -->
     <HeaderCustom />
     <div class="grid-container">
-        <div class="item1">
-            <Card
-                title="Avengers: Infinity War"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154756/?ref_=nv_sr_srsg_0"
-            />
-        </div>
-        <div class="item2">
-            <Card
-                title="Avengers: End Game"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154796/?ref_=tt_mv_close"
-            />
-        </div>
-        <div class="item1">
-            <Card
-                title="Avengers: Infinity War"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154756/?ref_=nv_sr_srsg_0"
-            />
-        </div>
-        <div class="item2">
-            <Card
-                title="Avengers: End Game"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154796/?ref_=tt_mv_close"
-            />
-        </div>
-        <div class="item1">
-            <Card
-                title="Avengers: Infinity War"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154756/?ref_=nv_sr_srsg_0"
-            />
-        </div>
-        <div class="item2">
-            <Card
-                title="Avengers: End Game"
-                rating="8.1"
-                thumbnailUrl="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
-                forwardUrl="https://www.imdb.com/title/tt4154796/?ref_=tt_mv_close"
-            />
+        <div v-for="movie in movies" :key="movie.title">
+            <!-- {{ movie.title }} -->
+            <div class="item1">
+                <Card
+                    :id="movie.id"
+                    :title="movie.title"
+                    :rating="movie.rating"
+                    :releaseYear="movie.releaseYear"
+                    :thumbnailUrl="movie.thumbnail"
+                    :forwardUrl="movie.thumbnail"
+                />
+            </div>
         </div>
     </div>
     <footer-custom />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import Button from "./components/Button.vue";
 import Card from "./components/Card.vue";
 import FooterCustom from "./components/FooterCustom.vue";
@@ -68,12 +32,31 @@ import NavigationBarRight from "./components/NavigationBarRight.vue";
 export default {
     name: "App",
     components: {
-        HelloWorld,
         Button,
         Card,
         FooterCustom,
         HeaderCustom,
-        NavigationBarRight
+        NavigationBarRight,
+    },
+    data() {
+        return {
+            message: this.message,
+            movies: this.movies,
+        };
+    },
+    created() {
+        (this.message = "naber"), this.getMovies();
+    },
+    methods: {
+        async getMovies() {
+            console.log("fetching movies...");
+            await fetch("/topMovies/25")
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    this.movies = data;
+                });
+        },
     },
 };
 </script>
@@ -94,7 +77,7 @@ export default {
     grid-gap: 10px;
     padding: 10px;
 }
-body{
+body {
     background-color: #121314;
 }
 img {

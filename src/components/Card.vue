@@ -1,6 +1,8 @@
 <template>
     <div class="container">
+        <p>{{ id }}</p>
         <p>{{ title }}</p>
+        <p>{{ releaseYear }}</p>
         <img :src="thumbnailUrl" v-on:click="forward" v-bind:alt="title" />
         <p>rating: {{ rating }}/10.0</p>
     </div>
@@ -10,7 +12,9 @@
 export default {
     name: "Card",
     props: {
+        id: String,
         title: String,
+        releaseYear: String,
         thumbnailUrl: String,
         rating: String,
         forwardUrl: String,
@@ -35,6 +39,7 @@ export default {
 img {
     max-width: 100%;
     max-height: 100%;
+    width: 15rem;
     margin: auto;
     display: block;
     border: 2px solid #ddd;
@@ -51,7 +56,7 @@ p {
     max-height: 100%;
     margin: 5px;
     display: block;
-    padding: 5px;
+    /* padding: 5px; */
     text-align: center;
     font-size: 18px;
     color: whitesmoke;
