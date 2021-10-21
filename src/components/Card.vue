@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <p>{{ id }}</p>
+        <p>#{{ id }}</p>
         <p>{{ title }}</p>
         <p>{{ releaseYear }}</p>
         <img :src="thumbnailUrl" v-on:click="forward" v-bind:alt="title" />

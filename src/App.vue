@@ -7,7 +7,7 @@
     <div class="grid-container">
         <div v-for="movie in movies" :key="movie.title">
             <!-- {{ movie.title }} -->
-            <div class="item1">
+            <div class="movie">
                 <Card
                     :id="movie.id"
                     :title="movie.title"

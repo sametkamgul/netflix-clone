@@ -21,10 +21,12 @@ footer {
     display: block;
 }
 a {
+    max-width: 100%;
+    max-height: 100%;
     text-decoration: none;
     text-align: center;
     margin: 10px;
-    font-size: 16px;
+    font-size: 18px;
     color: whitesmoke;
     padding: 5px;
 }
