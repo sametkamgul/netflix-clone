@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 //     console.log(posts);
 // })
 
-app.get('/topMovies/:limit', async (req, res) => {
+app.get('/api/topMovies/:limit', async (req, res) => {
     const limit = req.params.limit;
     let result = await scraper.getImdbTopMovies(limit);
     // console.log('top movies', result);

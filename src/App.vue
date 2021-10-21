@@ -50,7 +50,7 @@ export default {
     methods: {
         async getMovies() {
             console.log("fetching movies...");
-            await fetch("/topMovies/25")
+            await fetch("/api/topMovies/25")
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
