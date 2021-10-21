@@ -55,6 +55,9 @@ export default {
                 .then((data) => {
                     console.log(data);
                     this.movies = data;
+                }).catch(error => {
+                    console.log('[ERROR]', error);
+                    return [];
                 });
         },
     },
