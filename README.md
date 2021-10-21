@@ -1,9 +1,15 @@
 # test-project
 
 ## live-demo
+[check it out!](https://simple-netflix-clone-vuejs.herokuapp.com)
 
-```
-https://simple-netflix-clone-vuejs.herokuapp.com
+## scraping data from imdb
+
+>/topMovies/[id]
+
+you can choose how many movies you get in order to the imdb ratings. 
+```url
+https://simple-netflix-clone-vuejs.herokuapp.com/topMovies/10
 ```
 
 ## dependencies
@@ -32,6 +38,9 @@ npm run serve
 npm run build
 ```
 
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## TODOs:
+- Thumbnails size are not good enough. It must be bigger
+- Clicking the image should redirect user to the related imdb movie page
+- In the top of the page user could change the specifi genre (API should support that too)
+- User can achieve the information that which platforms (Disneyland, Netflix, etc.) serves the movie
+- User login, add favourites, sharing with friends etc.
