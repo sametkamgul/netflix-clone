@@ -58,7 +58,7 @@ async function getImdbTopMovies(limit=10) {
             let title = $(titleElements)
                 .find('a')
                 .text();
-            title = title.replaceAll('\n', ''); // removes unnecessary newline char
+            title = title.replace(/"\n/g, ''); // removes unnecessary newline char
             title = title[0] === ' ' ? title.slice(1) : title; // removes unnecessary whitespace at the beginning of string
             titles.push(title);
 
