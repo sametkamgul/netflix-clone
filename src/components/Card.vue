@@ -22,7 +22,7 @@ export default {
     methods: {
         forward() {
             console.log("forwarding to movie url");
-            // window.open(this.forwardUrl);
+            window.open(this.forwardUrl);
         },
     },
 };
@@ -39,7 +39,7 @@ export default {
 img {
     max-width: 100%;
     max-height: 100%;
-    width: 15rem;
+    width: 8rem;
     margin: auto;
     display: block;
     border: 2px solid #ddd;
@@ -56,7 +56,7 @@ p {
     max-height: 100%;
     margin: 5px;
     display: block;
-    /* padding: 5px; */
+    padding-bottom: 5px;
     text-align: center;
     font-size: 18px;
     color: whitesmoke;
