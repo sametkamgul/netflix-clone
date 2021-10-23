@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { html } = require('cheerio/lib/api/manipulation');
 
 // async function getPostTitles() {
 //     try {
@@ -20,13 +21,16 @@ const cheerio = require('cheerio');
 //     }
 // }
 
-async function getImdbTopMovies(limit=10) {
+async function getImdbTopMovies(limit = 10) {
     const orders = new Array();
     const movies = new Array();
     const posters = new Array();
     const titles = new Array();
     const ratings = new Array();
     const releaseYears = new Array();
+    const titleIds = new Array();
+    const imdbUrls = new Array();
+    const imdbUrlDraft = 'https://www.imdb.com/title/';
 
     try {
         const { data } = await axios.get('https://www.imdb.com/chart/top/');
@@ -39,10 +43,12 @@ async function getImdbTopMovies(limit=10) {
             const ratingElements = el;
             const posterElements = el;
             const releaseYearelements = el;
+            const titleIdElements = el;
 
             // orders
             let orderRaw = $(orderelements)
-                .find('.titleColumn').text();
+                .find('.titleColumn')
+                .text();
             let order = orderRaw.split('\n');
             order = parseInt(order[1]);
             // console.log('order', data);
@@ -52,14 +58,14 @@ async function getImdbTopMovies(limit=10) {
             let releaseYear = $(releaseYearelements)
                 .find('span')
                 .text();
+            releaseYear = formatReleaseYear(releaseYear);
             releaseYears.push(releaseYear);
 
             // titles
             let title = $(titleElements)
                 .find('a')
                 .text();
-            title = title.replace(/"\n/g, ''); // removes unnecessary newline char
-            title = title[0] === ' ' ? title.slice(1) : title; // removes unnecessary whitespace at the beginning of string
+            title = formatTitle(title);
             titles.push(title);
 
             // posters
@@ -74,7 +80,24 @@ async function getImdbTopMovies(limit=10) {
                 .find('strong')
                 .text();
             ratings.push(rating);
-            movies.push({id:order, title: title, releaseYear: releaseYear, rating: rating, thumbnail: poster});
+
+            // movie title ids
+            let titleId = $(titleIdElements)
+                .find('.ratingColumn')
+                .find('.seen-widget')
+                .attr('data-titleid');
+            titleIds.push(titleId);
+
+            // pushin all datas to the movie array
+            movies.push({
+                id: order,
+                titleId: titleId,
+                title: title,
+                releaseYear: releaseYear,
+                rating: rating,
+                thumbnail: poster,
+                imdbUrl: imdbUrlDraft + titleId,
+            });
         });
         // console.log(movies);
         return movies;
@@ -83,12 +106,28 @@ async function getImdbTopMovies(limit=10) {
     }
 }
 
-// getPostTitles()
-// .then((postTitles) => console.log(postTitles));
+function formatTitle(title) {
+    while (title.indexOf('\n') > -1) {
+        title = title.replace('\n', ''); // removes unnecessary newline char
+    }
+    title = title[0] === ' ' ? title.slice(1) : title; // removes unnecessary whitespace at the beginning of string
+    return title;
+}
 
-// getImdbTopMovies().then((movies) => {
-//     // console.log(movies);
-// });
+function formatReleaseYear(releaseYear) {
+    releaseYear = releaseYear.slice(0, -1);     // removes unnecessary whitespace at the end of string
+    while (releaseYear.indexOf(')') > -1) {
+        releaseYear = releaseYear.replace(')', ''); // removes unnecessary parenthesis char
+    }
+    while (releaseYear.indexOf('(') > -1) {
+        releaseYear = releaseYear.replace('(', ''); // removes unnecessary parenthesis char
+    }
+    return releaseYear;
+}
+
+getImdbTopMovies(4).then((movies) => {
+    // console.log(movies);
+});
 
 // module.exports.getPostTitles = getPostTitles;
 module.exports.getImdbTopMovies = getImdbTopMovies;
