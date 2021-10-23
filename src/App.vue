@@ -44,9 +44,8 @@ export default {
     methods: {
         async getMovies() {
             console.log("fetching movies...");
-            // const targetUrl = "/api/topMovies/25";
-            const targetUrl =
-                "https://77895cdd-19f0-43f9-b39c-2365a37cbc59.mock.pstmn.io/api/topMovies/25"; //moch server
+            const targetUrl = "/api/topMovies/25";
+            // const targetUrl = "https://77895cdd-19f0-43f9-b39c-2365a37cbc59.mock.pstmn.io/api/topMovies/25"; //moch server
             await fetch(targetUrl)
                 .then((response) => response.json())
                 .then((data) => {
