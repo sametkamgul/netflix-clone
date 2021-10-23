@@ -1,12 +1,7 @@
 <template>
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <Button text="Click me!!!" />
-    <Button text="Don't click me!!!" /> -->
     <HeaderCustom />
     <div class="grid-container">
         <div v-for="movie in movies" :key="movie.title">
-            <!-- {{ movie.title }} -->
             <div class="movie">
                 <Card
                     :id="movie.id"
@@ -14,7 +9,7 @@
                     :rating="movie.rating"
                     :releaseYear="movie.releaseYear"
                     :thumbnailUrl="movie.thumbnail"
-                    :forwardUrl="movie.thumbnail"
+                    :forwardUrl="movie.imdbUrl"
                 />
             </div>
         </div>
@@ -40,21 +35,19 @@ export default {
     },
     data() {
         return {
-            message: this.message,
             movies: this.movies,
         };
     },
     created() {
-        (this.message = "naber"), this.getMovies();
+        this.getMovies();
     },
     methods: {
         async getMovies() {
             console.log("fetching movies...");
             // const targetUrl = "/api/topMovies/25";
-            const targetUrl = "https://77895cdd-19f0-43f9-b39c-2365a37cbc59.mock.pstmn.io/api/topMovies/25";        //moch server
-            await fetch(
-                targetUrl
-            )
+            const targetUrl =
+                "https://77895cdd-19f0-43f9-b39c-2365a37cbc59.mock.pstmn.io/api/topMovies/25"; //moch server
+            await fetch(targetUrl)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
@@ -70,7 +63,6 @@ export default {
 </script>
 
 <style>
-
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 700px) {
     #app {
@@ -109,15 +101,17 @@ export default {
     }
     .grid-container {
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
-        grid-gap: 10px;
+        grid-template-columns: auto minmax(200px, 1fr);
+        /* height: 150vh; */
+        grid-gap: 40px;
+        margin: 0%;
         padding: 10px;
     }
     body {
         background-color: #000000;
     }
-    img {
+    /* img {
         color: white;
-    }
+    } */
 }
 </style>
